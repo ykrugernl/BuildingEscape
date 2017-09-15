@@ -29,10 +29,16 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+	AActor* PlayerPawn;
+	AActor* Door;
+
+	// These variables can be viewed in Unreal Editor
 	UPROPERTY(VisibleAnywhere)
 		float OpenAngle = 0.0f;
 	UPROPERTY(VisibleAnywhere)
 		float ClosedAngle = -90.0f;
+
+	// These variables can be edited in Unreal Editor
 	UPROPERTY(EditAnywhere)
 		ATriggerVolume* PressurePlateObjective;
 	UPROPERTY(EditAnywhere)
@@ -44,11 +50,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		float DoorOpenSpeed = 0.5f;
 
+	// Used in TickComponent
 	enum DoorAction { NO_ACTION, OPEN, CLOSE };
 	DoorAction CurrentDoorAction = DoorAction::NO_ACTION;
 	float LastDoorOpenTime;
-
-	AActor* PlayerPawn;
-	AActor* Door;
-	
 };

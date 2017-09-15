@@ -25,18 +25,23 @@ void UOpenDoor::BeginPlay()
 	Door = GetOwner();
 	PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-	PlayerEnteredRoom = false;
+	// Used for one time closing door when player enters the room
+	// It loops infinitely if not used
+	PlayerEnteredRoom = false; 
+
 	OpenTheDoor();
 }
 
 void UOpenDoor::OpenTheDoor()
 {
+	// Used in the TickComponent function below
 	CurrentDoorAction = DoorAction::OPEN;
 	
 }
 
 void UOpenDoor::CloseTheDoor()
 {
+	// Used in the TickComponent function below
 	CurrentDoorAction = DoorAction::CLOSE;
 }
 
@@ -47,17 +52,20 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	// Poll the trigger volume
 	// Open door when pawn is on trigger volume
+	// TODO Needed for completing game
+	// ===========================================================
 	if (PressurePlateObjective->IsOverlappingActor(PlayerPawn)) {
 		OpenTheDoor();
 		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
 	}
+	// ===========================================================
 
 	// Poll the other trigger volume
 	// Lock the player in the room upon entering
-	// DO THIS ONCE ONLY
+	// DO THIS ONCE ONLY !
 	if (PressurePlateLockPlayer->IsOverlappingActor(PlayerPawn) && !PlayerEnteredRoom) {
 		CloseTheDoor();
-		PlayerEnteredRoom = true;
+		PlayerEnteredRoom = true; // !
 	}
 
 	// Dynamically open the door

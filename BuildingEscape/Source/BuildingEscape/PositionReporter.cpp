@@ -19,11 +19,8 @@ void UPositionReporter::BeginPlay()
 	Super::BeginPlay();
 
 	FString ObjectName = GetOwner()->GetName();
-	float PosX = GetOwner()->GetTransform().GetLocation().X;
-	float PosY = GetOwner()->GetTransform().GetLocation().Y;
-	float PosZ = GetOwner()->GetTransform().GetLocation().Z;
-	FString ObjectPosition = FString::SanitizeFloat(PosX) + ", " + FString::SanitizeFloat(PosY) + ", " + FString::SanitizeFloat(PosZ);
-	UE_LOG(LogTemp, Warning, TEXT("%s is at position %s"), *ObjectName, *ObjectPosition);
+	FString ObjectPosition = GetOwner()->GetTransform().GetLocation().ToString();
+	// UE_LOG(LogTemp, Warning, TEXT("%s is at position %s"), *ObjectName, *ObjectPosition);
 }
 
 
