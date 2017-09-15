@@ -22,6 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void OpenTheDoor();
+	void CloseTheDoor();
 
 public:	
 	// Called every frame
@@ -33,8 +34,21 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		float ClosedAngle = -90.0f;
 	UPROPERTY(EditAnywhere)
-		ATriggerVolume* PressurePlate;
+		ATriggerVolume* PressurePlateObjective;
 	UPROPERTY(EditAnywhere)
-		AActor* PlayerPawn;
+		ATriggerVolume* PressurePlateLockPlayer;
+	UPROPERTY(EditAnywhere)
+		float DoorDelay = 0.8f;
+	UPROPERTY(EditAnywhere)
+		float DoorCloseSpeed = -1.0f;
+	UPROPERTY(EditAnywhere)
+		float DoorOpenSpeed = 0.5f;
+
+	enum DoorAction { NO_ACTION, OPEN, CLOSE };
+	DoorAction CurrentDoorAction = DoorAction::NO_ACTION;
+	float LastDoorOpenTime;
+
+	AActor* PlayerPawn;
+	AActor* Door;
 	
 };
